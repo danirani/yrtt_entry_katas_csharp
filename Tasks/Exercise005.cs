@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net;
 
 // Introduction
 // The wave (known as the Mexican wave in the English-speaking world outside North America) is an example of metachronal rhythm achieved in a packed 
@@ -25,9 +27,33 @@ namespace TechReturners.Tasks
 {
     public class Exercise005
     {
-        public static List<string> Wave(string str)
+        public static List<string> Wave(string inputString)
         {
-            throw new NotImplementedException();
+            List<string> waveList = new List<string>();
+
+            char[] charList = inputString.ToCharArray();
+
+            for (int i = 0; i<charList.Length; i++)
+            {
+                
+                if(i>0)
+                {
+                    charList[i - 1] = char.ToLower(charList[i - 1]);
+                }
+
+                if (Char.IsWhiteSpace(charList[i]))
+                {
+                    continue;
+                }
+
+                charList[i] = char.ToUpper(charList[i]);
+
+                waveList.Add(string.Join("", charList));
+            }
+
+            //Debug.Print("{0} = {1}", inputString,string.Join(",",waveList));
+
+            return waveList;
         }
     }
 }
