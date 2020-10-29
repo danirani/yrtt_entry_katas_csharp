@@ -18,6 +18,8 @@ namespace TechReturners.Tasks.UnitTests
             Assert.Equal(0, Exercise002.Past(0, 0, 0));
             Assert.Equal(3601000, Exercise002.Past(1, 0, 1));
             Assert.Equal(3600000, Exercise002.Past(1, 0, 0));
+            Assert.Equal(43199000, Exercise002.Past(11, 59, 59));
+            Assert.Equal(0, Exercise002.Past(0, 0, 0));
         }
     }
 }
