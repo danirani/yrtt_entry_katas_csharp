@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 // Scenario
 // Several people are standing in a row divided into two teams. The first person goes into team 1, the second goes into team 2, the third goes into team 1, and so on.
@@ -27,9 +29,27 @@ namespace TechReturners.Tasks
 {
     public class Exercise003
     {
-        public static int[] RowWeights(int[] a)
+        public static int[] RowWeights(int[] allPeopleArray)
         {
-            throw new NotImplementedException();
+            Dictionary<int, int> teamDict = new Dictionary<int, int>();
+
+            teamDict.Add(1, 0); // initialise team 1 total weight
+            teamDict.Add(2, 0); // initialise team 2 total weight
+
+            Debug.WriteLine("------------------");
+
+            int teamNo = 1;
+
+            foreach(int singlePersonsWeight in allPeopleArray)
+            {
+                teamDict[teamNo] += singlePersonsWeight;
+
+                Debug.WriteLine("Team No. {0} {1} {2}", teamNo, singlePersonsWeight, teamDict[teamNo]);
+
+                teamNo = (teamNo % 2)+1; // toggle team number between 1 and 2
+            }
+
+            return new int[] { teamDict[1], teamDict[2] };
         }
     }
 }
