@@ -16,20 +16,14 @@ namespace TechReturners.Tasks
     {
         public static int Singles(List<int> source)
         {
-            var groupCount = source.GroupBy(digit => digit);
+            // create a group object which contains all the digits
+            // supplied in the source list (Key) along with the number 
+            // of times that they feature (Count). Select and sum 
+            // only the digits which occur exactly once.
 
-            Debug.Print("-----------------");
-
-            foreach (var obj in groupCount)
-            {
-                Debug.WriteLine("{0} , {1}", obj.Key, obj.Count());
-            }
-
-            int totalOfSingles = groupCount
-               .Where(group => group.Count() == 1)
-               .Select(unique => unique.Key).Sum();
-
-            Debug.WriteLine("{0} = {1}", string.Join(",", source), totalOfSingles);
+            int totalOfSingles = source.GroupBy(digit => digit)
+                .Where(group => group.Count() == 1)
+                .Select(unique => unique.Key).Sum();
 
             return totalOfSingles;
         }
