@@ -31,23 +31,28 @@ namespace TechReturners.Tasks
     {
         public static int[] RowWeights(int[] allPeopleArray)
         {
+            // dictionary will hold the two teams' total weight
+            // using the team number as the (integer) key.
+
             Dictionary<int, int> teamDict = new Dictionary<int, int>();
 
             teamDict.Add(1, 0); // initialise team 1 total weight
             teamDict.Add(2, 0); // initialise team 2 total weight
 
-            Debug.WriteLine("------------------");
+            // the first weight encountered will always go into team 1.
 
             int teamNo = 1;
+
+            // loop through all the weights toggling the team number 
+            // dictionary key between 1 and 2.
 
             foreach(int singlePersonsWeight in allPeopleArray)
             {
                 teamDict[teamNo] += singlePersonsWeight;
-
-                Debug.WriteLine("Team No. {0} {1} {2}", teamNo, singlePersonsWeight, teamDict[teamNo]);
-
                 teamNo = (teamNo % 2)+1; // toggle team number between 1 and 2
             }
+
+            // return each team's grand total as an integer array.
 
             return new int[] { teamDict[1], teamDict[2] };
         }
