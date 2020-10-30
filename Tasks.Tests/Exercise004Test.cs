@@ -20,5 +20,11 @@ namespace TechReturners.Tasks.UnitTests
         {
             Assert.Equal("igPay atinlay siay oolcay!!", Exercise004.PigIt("Pig latin is cool!!"));
         }
+
+        [Fact]
+        public void CheckIgnorePunctuationAndKeepSpacing()
+        {
+            Assert.Equal("Aay  irdbay niay hetay andhay# siay## orthway  ## omethingsay!! ", Exercise004.PigIt("A  bird in the hand# is## worth  ## something!! "));
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 // Move the first letter of each word to the end of it, then add "ay" to the end of the word. 
 // Leave punctuation marks untouched.
@@ -13,59 +14,86 @@ namespace TechReturners.Tasks
         {
             List<string> sentence = new List<string>();
 
-            string word="";
-            string punc = "";
+            string word = ""; // hold letters in a string buffer
 
             foreach (var letter in inputText)
             {
-                if(letter == ' ')
+                if(Char.IsWhiteSpace(letter))
                 {
-                    sentence.Add(ProcessWord(word)+punc+" ");
+                    // space has been encountered so process the word
+                    // i.e. move first char to last position and add "ay"
+                    // store the result in the sentence list.
+
+                    sentence.Add(ProcessWord(word));
+                    
+                    // preserve sentence spacing by adding every space to the sentence list
+
+                    sentence.Add(" ");
+
+                    // clear the letter buffer
+
                     word = "";
-                    punc = "";
-                }
-                else if(char.IsPunctuation(letter))
-                {
-                    // preserve punctuation
-                    punc += letter;
                 }
                 else
                 {
-                    // store alphanumeric chars, not punctuation or spaces
+                    // store all characters apart from white space in a string buffer.
                     word += letter;
                 }
             }
 
-            // check for the final word on EOL
+            // process the final word (if any) on EOL
 
             if (word.Length > 0)
             {
-                sentence.Add(ProcessWord(word)+punc);
+                sentence.Add(ProcessWord(word));
             }
-
-            //Debug.WriteLine("<{0}> <{1}>",inputText,string.Join("",sentence));
 
             return string.Join("", sentence);
         }
 
-        static string ProcessWord(string rawWord)
+        static string ProcessWord(string word)
         {
-            // receive a raw word as input and amend it
-            // such that the first letter is moved to the end.
-            // Append "ay" to the amended word and return the result.
+           
+            string finalWord="";
 
-            string remaining = "";
+            // find the last input string index of the character before any 
+            // puntuation; this will be the full word length-1 if there are no 
+            // punctuation characters.
 
-            if (rawWord.Length == 1)
+            int endOfWord = FindEndOfWord(word);
+
+            if(endOfWord >= 0)
             {
-                remaining = rawWord;
+                // the input word is not empty so move the first character to the end 
+                // (before any punctuation) and add "ay" to the amended word.
+
+                finalWord = word.Substring(1, endOfWord) + word.Substring(0, 1)+"ay";
             }
-            else
+            
+            // add the remaining punctuation (if any)
+
+            finalWord += word.Substring(endOfWord+1);
+            
+            return finalWord;
+        }
+
+        static int FindEndOfWord(string word)
+        {
+            // return the string index of the last contiguous non-punctuation character.
+            // e.g. "hand#" returns 3, "A" returns 0, and "!" returns -1.
+        
+            int lastLetter = -1;
+
+            foreach(var c in word)
             {
-                remaining = rawWord.Substring(1) + rawWord.Substring(0, 1);
+                if (char.IsPunctuation(c)) {
+                    break;
+                }
+
+                lastLetter++;
             }
 
-            return remaining + "ay";
+            return lastLetter;
         }
     }
 }
