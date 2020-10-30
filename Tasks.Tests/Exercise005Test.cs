@@ -62,5 +62,12 @@ namespace TechReturners.Tasks.UnitTests
             List<string> result = new List<string> { " Gap ", " gAp ", " gaP " };
             Assert.Equal(result, Exercise005.Wave(" gap "));
         }
+
+        [Fact]
+        public void CheckSingleCharacter()
+        {
+            List<string> result = new List<string> { "G" };
+            Assert.Equal(result, Exercise005.Wave("g"));
+        }
     }
 }

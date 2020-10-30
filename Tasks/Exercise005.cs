@@ -30,28 +30,35 @@ namespace TechReturners.Tasks
         public static List<string> Wave(string inputString)
         {
             List<string> waveList = new List<string>();
-
-            char[] charList = inputString.ToCharArray();
-
-            for (int i = 0; i<charList.Length; i++)
+            
+            for (int i = 0; i<inputString.Length; i++)
             {
-                
-                if(i>0)
-                {
-                    charList[i - 1] = char.ToLower(charList[i - 1]);
-                }
+                // loop through all the character positions in the input string.
 
+                // create a list of the characters that form the input string
+                // because C# String objects are immutable and cannot be amended.
+
+                char[] charList = inputString.ToCharArray();
+
+                // if the current character is a space, then do not process 
+                // and continue onto the next character position.
+                
                 if (Char.IsWhiteSpace(charList[i]))
                 {
                     continue;
                 }
 
+                // set the current character to uppercase.
+
                 charList[i] = char.ToUpper(charList[i]);
+
+                // join the amended characters in the list to form a 
+                // single word and add it to the wave sequence list.
 
                 waveList.Add(string.Join("", charList));
             }
 
-            //Debug.Print("{0} = {1}", inputString,string.Join(",",waveList));
+            // return the full wave sequence as a list.
 
             return waveList;
         }
